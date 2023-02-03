@@ -6,18 +6,57 @@ export const defaultNavigation: FuseNavigationItem[] = [
         //subtitle: 'Unique dashboard designs',
         type    : 'group',
         icon    : 'heroicons_outline:home',
-        roles   : ['ADMIN','EDIT','VIEW'],
         children: [
             {
                 id   : 'home',
                 title: 'home',
                 type : 'basic',
                 icon : 'home',
-                roles : ['ADMIN','EDIT','VIEW'],
+                roles : ['ADMIN'],
                 link : '/home'
             }
         ]
-    },
+    },{
+        id      : 'Article',
+        title   : 'Articles',
+        //subtitle: 'Unique dashboard designs',
+        type    : 'group',
+        icon    : 'heroicons_outline:home',
+        children: [
+            {
+                id   : 'add',
+                title: 'Ajouter',
+                type : 'basic',
+                icon : 'home',
+                roles : ['ADMIN','EDIT','VIEW'],
+                link : '/article/add'
+            }
+        ]
+    },{
+        id      : 'settings',
+        title   : 'Parametres',
+        subtitle: 'Administration',
+        type    : 'group',
+        icon    : 'heroicons_outline:home',
+        roles : ['ADMIN','EDIT','VIEW'],
+        children: [
+            {
+                id   : 'settings',
+                title: 'Profile',
+                type : 'basic',
+                icon : 'settings',
+                roles : ['ADMIN','EDIT','VIEW'],
+                link : '/settings'
+            },{
+                id   : 'user',
+                title: 'comptes',
+                type : 'basic',
+                icon : 'people_alt',
+                link : '/user/list',
+                roles : ['ADMIN']
+            }
+        ]
+    }
 ];
 export const compactNavigation: FuseNavigationItem[] = [
     {

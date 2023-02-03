@@ -68,12 +68,12 @@ export class SettingsSecurityComponent implements OnInit
 
         // Hide the alert
         this.showAlert = false;
-        console.log('form',this.securityForm.value);
+        
         // Sign up
         this._settingsService.changePassword({'currentPassword':this.securityForm.value.currentPassword,'newPassword':this.securityForm.value.newPassword})
             .subscribe(
                 (response) => {
-                    console.log('Valide',response);
+                   
                     // Navigate to the confirmation required page
                     //this._router.navigateByUrl('/confirmation-required');
                     this.securityForm.enable();
@@ -81,7 +81,7 @@ export class SettingsSecurityComponent implements OnInit
                     this._authService.signOut().subscribe(a=>this._router.navigate(['sign-in']));
                 },
                 (error) => {
-                    console.log('error',error);
+                    
                     // Re-enable the form
                     this.securityForm.enable();
 

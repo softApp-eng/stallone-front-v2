@@ -81,7 +81,7 @@ export class UserListComponent implements OnInit, OnDestroy
     getAllUsers(){
         this.isLoadingResults = true;
         this._usersService.getAll().subscribe((data:User[])=>{
-            console.log(data);
+            
             this.dataSource.data = data;
             this.isLoadingResults = false;
             this.dataSource.paginator = this.paginator;

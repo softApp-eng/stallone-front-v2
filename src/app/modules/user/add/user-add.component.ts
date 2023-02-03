@@ -115,7 +115,7 @@ export class UserAddComponent implements OnInit
         this.userForm.disable();
         this.userid = this._activeRoute.snapshot.params.id;
         this._usersService.getById(this.userid).subscribe((data:any)=>{
-            console.log('data',data)
+            
             this.userForm.patchValue({userid: data?.userid});
             this.userForm.patchValue({username: data?.username});
             this.userForm.patchValue({origine: data?.origine});
@@ -127,7 +127,7 @@ export class UserAddComponent implements OnInit
 
             this.userForm.enable();
         },error => {
-            console.log(error)
+            
             this._snackBar.open('user introuvable!', 'ok', {duration: 5000});
             this._router.navigateByUrl('/user/list');
         });
