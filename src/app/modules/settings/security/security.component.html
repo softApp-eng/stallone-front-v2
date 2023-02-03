@@ -1,0 +1,112 @@
+<div class="w-full max-w-3xl">
+
+
+
+    <!-- Form -->
+    <form [formGroup]="securityForm" #securityNgForm="ngForm">
+
+        <!-- Section -->
+        <div class="w-full">
+            <div class="text-xl">Changer Mot de passe</div>
+            <div class="text-secondary">Attention vous allez déconnecter après le changement du mot de passe!</div>
+        </div>
+        <fuse-alert
+            class="mt-8 -mb-4"
+            *ngIf="showAlert"
+            [appearance]="'outline'"
+            [showIcon]="false"
+            [type]="alert.type"
+            [@shake]="alert.type === 'error'">
+            {{alert.message}}
+        </fuse-alert>
+        <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+            <!-- Current password -->
+            <div class="sm:col-span-4">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Mot de passe courrent</mat-label>
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:key'"
+                        matPrefix></mat-icon>
+                    <input
+                        [formControlName]="'currentPassword'"
+                        type="password"
+                        matInput>
+                    <mat-error *ngIf="securityForm.get('currentPassword').hasError('required')">
+                        confirmation is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <!-- New password -->
+            <div class="sm:col-span-4">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Nouveau mot de passe</mat-label>
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:key'"
+                        matPrefix></mat-icon>
+                    <input
+                        [formControlName]="'newPassword'"
+                        type="password"
+                        matInput>
+                    <mat-error *ngIf="securityForm.get('newPassword').hasError('required')">
+                        confirmation is required
+                    </mat-error>
+                </mat-form-field>
+                <!--div class="mt-1 text-md text-hint">Minimum 8 characters. Must include numbers, letters and special characters.</div-->
+            </div>
+
+            <div class="sm:col-span-4">
+                <mat-form-field class="fuse-mat-no-subscript w-full">
+                    <mat-label>Confirmation</mat-label>
+                    <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:key'"
+                        matPrefix></mat-icon>
+                    <input
+                        [formControlName]="'confirmation'"
+                        type="password"
+                        matInput>
+                    <mat-error *ngIf="securityForm.get('confirmation').hasError('required')">
+                        confirmation is required
+                    </mat-error>
+                    <mat-error *ngIf="securityForm.get('confirmation').hasError('mustMatch')">
+                        confirmation doit etre identique du password
+                    </mat-error>
+                </mat-form-field>
+                <!--div class="mt-1 text-md text-hint">Minimum 8 characters. Must include numbers, letters and special characters.</div-->
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="my-10 border-t"></div>
+
+        <!-- Divider -->
+        <div class="my-10 border-t"></div>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-end">
+            <button
+                mat-stroked-button
+                type="reset">
+                Reset
+            </button>
+            <button
+                class="ml-4"
+                mat-flat-button
+                [color]="'primary'"
+                type="button"
+                [disabled]="securityForm.disabled || securityForm.invalid"
+                (click)="save()">
+                    <span *ngIf="!securityForm.disabled">
+                        save
+                    </span>
+                <mat-progress-spinner
+                    *ngIf="securityForm.disabled"
+                    [diameter]="24"
+                    [mode]="'indeterminate'"></mat-progress-spinner>
+            </button>
+        </div>
+    </form>
+
+</div>

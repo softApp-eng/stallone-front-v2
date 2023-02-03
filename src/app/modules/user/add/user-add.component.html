@@ -1,0 +1,224 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-primary-500">Paramétre</a>
+                </div>
+            </div>
+            <!-- Title -->
+            <div class="mt-2">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                    Utilisateurs
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="prose prose-sm max-w-full">
+                <fuse-card class="flex flex-col w-full p-8 mb-8">
+                    <div class="text-2xl font-semibold leading-tight">Utilisateur</div>
+                    <div class="mt-4">
+                        Nouveau utilisateur.
+                    </div>
+                    <fuse-alert
+                        class="mt-8 -mb-4"
+                        *ngIf="showAlert"
+                        [appearance]="'outline'"
+                        [showIcon]="false"
+                        [type]="alert.type"
+                        [@shake]="alert.type === 'error'">
+                        {{alert.message}}
+                    </fuse-alert>
+                    <form class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden"
+                          [formGroup]="userForm"
+                          #userNgForm="ngForm">
+                        <div class="flex flex-col gt-xs:flex-row gt-xs:items-start">
+                            <div class="flex-auto min-w-64">
+
+                                <div class="flex">
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>Username</mat-label>
+                                        <input
+                                            matInput
+                                            required
+                                            type="text"
+                                            [formControlName]="'username'"
+                                            [placeholder]="'username'">
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            matPrefix
+                                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                                        <mat-error *ngIf="userForm.get('username').hasError('required')">
+                                            champ obligatoire.
+                                        </mat-error>
+                                        <mat-error *ngIf="userForm.get('username').hasError('pattern')">
+                                            username invalide, les caractères d'espace sont invalide.
+                                        </mat-error>
+                                        <mat-error *ngIf="userForm.get('username').hasError('maxlength')">
+                                            username ne doit pas depacer 20 caratctères.
+                                        </mat-error>
+                                        <mat-error *ngIf="userForm.get('username').hasError('minlength')">
+                                            username doit etre superieur à 3 caratctères.
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="flex">
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>Service</mat-label>
+                                        <input
+                                            matInput
+                                            required
+                                            type="text"
+                                            [formControlName]="'origine'"
+                                            [placeholder]="'origine'">
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            matPrefix
+                                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                                        <mat-error *ngIf="userForm.get('origine').hasError('required')">
+                                            champ obligatoire.
+                                        </mat-error>
+                                        <mat-error *ngIf="userForm.get('origine').hasError('maxlength')">
+                                            Vous avez depacer 250 caratctères.
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="flex">
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>unites privileges</mat-label>
+
+                                        <mat-select [(ngModel)]="selectedUnites" [placeholder]="'unites'" [formControlName]="'unitescode'" multiple required>
+                                            <mat-select-trigger>
+                                                <span *ngIf="selectedUnites?.length > 0" class="example-additional-selection">
+                                                    (+{{selectedUnites.length}} {{selectedUnites?.length < 2 ? 'unité' : 'unités'}})
+                                                </span>
+                                            </mat-select-trigger>
+                                            <mat-option *ngFor="let u of unites" [value]="u?.code">{{u?.unite}}</mat-option>
+                                        </mat-select>
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            matPrefix
+                                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                                        <mat-error *ngIf="userForm.get('unitescode').hasError('required')">
+                                            champ obligatoire.
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="flex">
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>Roles</mat-label>
+                                        <mat-select  [(ngModel)]="selectedroles" [placeholder]="'roles'" [formControlName]="'rolesId'" multiple required>
+                                            <mat-select-trigger>
+                                                <span *ngIf="selectedroles?.length > 0" class="example-additional-selection">
+                                                    (+{{selectedroles.length}} {{selectedroles?.length < 2 ? 'role' : 'roles'}})
+                                                </span>
+                                            </mat-select-trigger>
+                                            <mat-option *ngFor="let r of roles" [value]="r?.id">{{r.role}}</mat-option>
+                                        </mat-select>
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            matPrefix
+                                            [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
+                                        <mat-error *ngIf="userForm.get('rolesId').hasError('required')">
+                                            champ obligatoire.
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="flex" *ngIf="!userid" >
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>Mot de passe</mat-label>
+                                        <input
+                                            matInput
+                                            required
+                                            type="password"
+                                            [formControlName]="'password'"
+                                            [placeholder]="'mot de passe'">
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            matPrefix
+                                            [svgIcon]="'heroicons_solid:key'"></mat-icon>
+                                        <mat-error *ngIf="userForm.get('password').hasError('required')">
+                                            champ obligatoire.
+                                        </mat-error>
+                                        <mat-error *ngIf="userForm.get('password').hasError('maxlength')">
+                                            Vous avez depacer 50 caratctères.
+                                        </mat-error>
+                                        <mat-error *ngIf="userForm.get('password').hasError('minlength')">
+                                            mot de passe doit etre superieur à 6 caratctères.
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="flex" *ngIf="!userid">
+                                    <mat-form-field class="flex-auto">
+                                        <mat-label>Confirmation</mat-label>
+                                        <input
+                                            matInput
+                                            required
+                                            type="password"
+                                            [formControlName]="'confirmation'"
+                                            [placeholder]="'confirmation'">
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            matPrefix
+                                            [svgIcon]="'heroicons_solid:key'"></mat-icon>
+                                        <mat-error *ngIf="userForm.get('confirmation').hasError('mustMatch')">
+                                            confirmation doit etre identique du password.
+                                        </mat-error>
+                                        <mat-error *ngIf="userForm.get('confirmation').hasError('required')">
+                                            confirmation is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="flex">
+                                        <mat-checkbox
+                                            class="mb-2"
+                                            matInput
+                                            [formControlName]="'accountStatus'"
+                                            [color]="'primary'">
+                                            Activer
+                                        </mat-checkbox>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-end -mx-8 mt-8 px-8 py-5">
+                            <button mat-button type="reset" >
+                                Reseter
+                            </button>
+                            <button
+                                class="px-6 ml-3"
+                                mat-flat-button
+                                [color]="'primary'"
+                                type="button"
+                                (click)="save()"
+                                [@shake]="alert.type === 'error'"
+                                [disabled]="userForm.disabled || userForm.invalid"
+                                >
+                                <span>
+                                    enregistrer
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+
+                </fuse-card>
+
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,4 @@
+-appreciation : noteurs
+-rectifier la mise à jour des dates fin au moment de la modification
+-detachement eference fin doit afficher que pour la modification
+

@@ -1,0 +1,84 @@
+<div class="w-full max-w-3xl">
+
+        <!-- Section -->
+        <div class="w-full text-xl mb-8">
+            <div class="flex items-center">
+                <mat-icon
+                    class="icon-size-5 mr-3"
+                    [svgIcon]="'heroicons_solid:user'"></mat-icon>
+                <span class="leading-none">Utilisatateur</span>
+            </div>
+
+        </div>
+        <div class="grid grid-cols-1 gap-6 w-full mt-2">
+            <div class="flex items-center justify-between">
+                <div class="flex-auto cursor-pointer">
+                    <div class="leading-6 font-medium">Username</div>
+                    <div class="text-md text-secondary">{{user?.username}}</div>
+                </div>
+            </div>
+            <div class="flex items-center justify-between">
+                <div class="flex-auto cursor-pointer">
+                    <div class="leading-6 font-medium">Service</div>
+                    <div class="text-md text-secondary">{{user?.origine}}</div>
+                </div>
+            </div>
+            <div class="flex items-center justify-between">
+                <div class="flex-auto cursor-pointer">
+                    <div class="leading-6 font-medium">Status</div>
+                    <div class="text-md text-secondary">{{(user?.accountStatus)?'Activé':'Désactivé'}}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="my-10 border-t"></div>
+
+        <!-- Section -->
+    <div class="w-full text-xl mb-8">
+        <div class="flex items-center">
+            <mat-icon
+                class="icon-size-5 mr-3"
+                [svgIcon]="'heroicons_solid:shield-check'"></mat-icon>
+            <span class="leading-none">Permission</span>
+        </div>
+
+    </div>
+        <div class="w-full mt-2 font-medium">Unités permises:</div>
+        <div class="grid grid-cols-1 gap-4 w-full mt-4">
+            <div class="flex items-center justify-between">
+                <div class="flex-auto leading-6 cursor-pointer"  >
+                    <ul>
+                        <li *ngFor="let u of user?.unites" >{{u}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    <!-- Divider -->
+    <div class="my-10 border-t"></div>
+
+    <div class="w-full text-xl mb-8">
+        <div class="flex items-center">
+            <mat-icon
+                class="icon-size-5 mr-3"
+                [svgIcon]="'heroicons_solid:badge-check'"></mat-icon>
+            <span class="leading-none">Roles</span>
+        </div>
+
+    </div>
+        <div class="w-full mt-2 font-medium">Roles possedés:</div>
+        <div class="grid grid-cols-1 gap-4 w-full mt-4">
+            <div class="flex items-center justify-between">
+                <div class="flex-auto leading-6 cursor-pointer"  >
+                    <ul>
+                        <li *ngFor="let r of user?.roles" >{{r}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+
+</div>
