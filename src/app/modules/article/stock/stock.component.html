@@ -1,0 +1,94 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center font-medium">
+                <div>
+                    <a class="whitespace-nowrap text-primary-500">Stallone</a>
+                </div>
+            </div>
+            <!-- Title -->
+            <div class="mt-2">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                    Stock
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="prose prose-sm max-w-full">
+            <div class="mb-12 p-8 rounded-2xl shadow bg-card">
+                <div class="d-flex justify-content-between" >
+                    <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64">
+                        <mat-icon
+                            class="icon-size-5"
+                            matPrefix
+                            [svgIcon]="'heroicons_solid:search'"></mat-icon>
+                        <input
+                            matInput
+                            #input
+                            (keyup)="applyFilter($event)"
+                            [autocomplete]="'off'"
+                            [placeholder]="'Rechercher user'">
+                    </mat-form-field>
+                </div>
+
+
+                <!-- Table -->
+                        <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort >
+
+                            <ng-container matColumnDef="code">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> CODE </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{row?.code}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="designation">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> DESIGNATION </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{row?.designation}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="quantite">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> QUANTITE </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{row?.quantite}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="prix">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> PRIX </th>
+                                <td mat-cell *matCellDef="let row">
+                                    {{row?.prix}}
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+                                class="example-element-row">
+                            </tr>
+
+                            <tr class="mat-row" *matNoDataRow>
+                                <td class="mat-cell" [attr.colspan]="displayedColumns.length">aucun article "{{input.value}}"</td>
+                            </tr>
+
+                        </table>
+
+                        <mat-paginator
+                            [showFirstLastButtons]="true"
+                            [pageSize]="10"
+                            [pageSizeOptions]="[5, 10, 25, 100]">
+                        </mat-paginator>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

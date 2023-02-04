@@ -6,144 +6,85 @@
             <!-- Breadcrumbs -->
             <div class="flex flex-wrap items-center font-medium">
                 <div>
-                    <a class="whitespace-nowrap text-primary-500">aaaaaaaaaaaaaaa</a>
+                    <a class="whitespace-nowrap text-primary-500">Stallone stock</a>
                 </div>
             </div>
             <!-- Title -->
             <div class="mt-2">
                 <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-                    Matricule
+                    Articles
                 </h2>
             </div>
         </div>
-        <button
-            class="-ml-3 sm:ml-0 mb-2 sm:mb-0 order-first sm:order-last"
-            [matTooltip]="'Revenir'"
-            mat-icon-button
-            (click)="back()">
-            <mat-icon class="icon-size-8" [svgIcon]="'heroicons_outline:reply'"></mat-icon>
-        </button>
     </div>
 
-    <!-- Main -->
-    <div class="flex-auto p-6 sm:p-10">
-        <div class="prose prose-sm max-w-full">
-            <fuse-card class="flex flex-col w-full p-8 mb-8">
-                <div class="text-2xl font-semibold leading-tight">Changer matricule</div>
-                <fuse-alert
-                    class="mt-8 -mb-4"
-                    *ngIf="showAlert"
-                    [appearance]="'outline'"
-                    [showIcon]="false"
-                    [type]="alert.type"
-                    [@shake]="alert.type === 'error'">
-                    {{alert.message}}
-                </fuse-alert>
-                <form class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden"
-                      [formGroup]="userForm"
-                      #userNgForm="ngForm">
-                    <div class="mb-8 font-semibold text-accent-500">
-                        Changer le matricule suivant .
-                    </div>
-                    <div class="flex flex-col gt-xs:flex-row gt-xs:items-start">
+    <div class="flex flex-auto p-6 sm:p-10">
+        <div class="flex flex-col flex-auto w-full max-w-xs sm:max-w-5xl mx-auto">
+            <div class="flex flex-col sm:flex-row items-center justify-between w-full max-w-xs sm:max-w-none">
+                <mat-form-field
+                    class="fuse-mat-no-subscript w-full sm:w-100 mt-4 sm:mt-0 sm:ml-4"
+                    [floatLabel]="'always'">
+                    <mat-icon
+                        matPrefix
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:search'"></mat-icon>
+                    <input
+                        #inpcode
+                        placeholder="Search by title or description"
+                        matInput
+                        (keyup.enter)="getArticle(inpcode.value)"
+                        #query>
+                </mat-form-field>
+                <mat-slide-toggle
+                    class="mt-8 sm:mt-0 sm:ml-auto"
+                    [color]="'primary'"
+                    (change)="inpcode.value='';inpcode.disabled = !inpcode.disabled">
+                    manuel1
+                </mat-slide-toggle>
+            </div>
+        </div>
+    </div>
 
-                        <div class="flex-auto min-w-64">
-
-                            <div class="flex">
-                                <mat-form-field class="flex-auto mr-3">
-                                    <mat-label>Matricule</mat-label>
-                                    <input
-                                        matInput
-                                        required
-                                        type="text"
-                                        [formControlName]="'matricule'"
-                                        [placeholder]="'matricule'">
-                                    <mat-icon
-                                        class="icon-size-5"
-                                        matPrefix
-                                        [svgIcon]="'heroicons_solid:user-circle'"></mat-icon>
-                                    <mat-error *ngIf="userForm.get('matricule').hasError('required')">
-                                        champ obligatoire.
-                                    </mat-error>
-                                    <mat-error *ngIf="userForm.get('matricule').hasError('pattern')">
-                                        format invalide.
-                                    </mat-error>
-                                </mat-form-field>
-
-                            </div>
-
-
-                        </div>
-                    </div>
-
-
-                    <div class="flex items-center justify-end -mx-8 mt-8 px-8 py-5">
-                        <button
-                            class="px-6 ml-3"
-                            mat-flat-button
-                            [color]="'primary'"
-                            type="button"
-                            (click)="save()"
-                            [@shake]="alert.type === 'error'"
-                            [disabled]="userForm.disabled || userForm.invalid"
-                        >
-                                <span>
-                                    enregistrer
-                                </span>
-                        </button>
-                    </div>
-                </form>
-
-            </fuse-card>
-
+    <ng-container *ngIf="article;">
+        <div class="flex flex-col sm:flex-row items-center justify-center w-full max-w-xs sm:max-w-none">
             <fuse-card class="flex flex-col md:flex-row max-w-80 md:max-w-160 w-full filter-shopping">
                 <div class="flex-0 w-80 md:w-60 ">
                     <img
                         class="w-full h-full object-cover"
-                        src="assets/images/cards/sneakers-02-448x560.jpg"
+                        [src]="url+'/public/article/image?name='+article?.code+'.jpg'"
                         alt="Card cover image">
                 </div>
                 <div class="flex flex-col flex-auto m-8 mb-4">
-                    <div class="text-2xl leading-tight">Gray sneakers with white stripes</div>
-                    <div class="text-md font-medium text-secondary mt-1">ALIDAS</div>
-                    <div class="text-3xl font-semibold mt-4">$240.00</div>
+                    <div class="text-2xl leading-tight">{{article?.designation}}</div>
+                    <div class="text-md font-medium text-secondary mt-1">{{article?.code}}</div>
+                    <div class="text-3xl font-semibold mt-4">{{article?.prix+' DH'}}</div>
                     <div class="flex items-center text-md mt-6">
-                        <span class="text-secondary whitespace-nowrap mr-3">Select a size:</span>
-                        <span class="mr-2">39</span>
-                        <span class="mr-2">40</span>
-                        <span class="mr-2">41</span>
-                        <span class="font-bold text-primary mr-2">42</span>
-                        <span class="mr-2">43</span>
+                        <span class="text-secondary whitespace-nowrap mr-3">Quantité stock:</span>
+                        <span class="font-bold text-primary mr-2">{{article?.quantite}}</span>
                     </div>
                     <hr class="w-full border-b mt-6 md:mt-auto mb-4">
-                    <div class="flex items-center -mx-3">
+                    <div class="flex flex-col sm:flex-row items-center justify-between -mx-3">
+                        <mat-form-field class="example-full-width" appearance="legacy">
+                            <mat-label>Quantité</mat-label>
+                            <input #inpQuantite type="number" min="1" matInput placeholder="Quantité">
+                        </mat-form-field>
                         <button
                             class="px-3 mr-1"
                             mat-button
+                            [disabled]="inpQuantite.value.length == 0"
+                            (click)="saveQuantite(inpQuantite.value)"
                             [color]="'primary'">
                             <mat-icon
                                 class="icon-size-5"
-                                [svgIcon]="'heroicons_solid:shopping-cart'"></mat-icon>
-                            <span class="ml-2">Add to Cart</span>
-                        </button>
-                        <button
-                            class="ml-auto"
-                            mat-icon-button>
-                            <mat-icon
-                                class="icon-size-5 text-hint"
-                                [svgIcon]="'heroicons_solid:heart'"></mat-icon>
-                        </button>
-                        <button mat-icon-button>
-                            <mat-icon
-                                class="icon-size-5 text-hint"
-                                [svgIcon]="'heroicons_solid:switch-horizontal'"></mat-icon>
+                                svgIcon="add_shopping_cart"></mat-icon>
+                            <span class="ml-2">Ajouter</span>
                         </button>
                     </div>
                 </div>
             </fuse-card>
-
-
         </div>
-    </div>
+
+    </ng-container>
+    <!-- Main -->
 
 </div>

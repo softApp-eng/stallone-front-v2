@@ -30,6 +30,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 icon : 'home',
                 roles : ['ADMIN','EDIT','VIEW'],
                 link : '/article/add'
+            },{
+                id   : 'stock',
+                title: 'Stock',
+                type : 'basic',
+                icon : 'home',
+                roles : ['ADMIN','EDIT','VIEW'],
+                link : '/article/stock'
             }
         ]
     },{
@@ -41,13 +48,6 @@ export const defaultNavigation: FuseNavigationItem[] = [
         roles : ['ADMIN','EDIT','VIEW'],
         children: [
             {
-                id   : 'settings',
-                title: 'Profile',
-                type : 'basic',
-                icon : 'settings',
-                roles : ['ADMIN','EDIT','VIEW'],
-                link : '/settings'
-            },{
                 id   : 'user',
                 title: 'comptes',
                 type : 'basic',

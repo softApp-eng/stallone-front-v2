@@ -1,17 +1,15 @@
 import {
-    Component,
-    OnDestroy,
+    Component, HostListener,
     OnInit,
-    ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import {FormBuilder, FormGroup, NgForm, Validators} from "@angular/forms";
-import {Subject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
+import {FormBuilder} from "@angular/forms";
 import {Location} from "@angular/common";
 import {fuseAnimations} from "../../../../@fuse/animations";
-import {FuseAlertType} from "../../../../@fuse/components/alert";
 import {ToastrServiceCustom} from "../../../core/services/toastr.service";
+import {MatSlideToggleChange} from "@angular/material/slide-toggle";
+import {ArticleService} from "../article.service";
+import {environment} from "../../../../environments/environment";
 
 @Component({
     selector       : 'article-add',
@@ -19,18 +17,11 @@ import {ToastrServiceCustom} from "../../../core/services/toastr.service";
     encapsulation  : ViewEncapsulation.None,
     animations   : fuseAnimations
 })
-export class AddComponent implements OnInit,OnDestroy
+export class AddComponent implements OnInit
 {
-
-    private _unsubscribeAll: Subject<any>;
-
-    @ViewChild('userNgForm') userNgForm: NgForm;
-    userForm: FormGroup;
-    alert: { type: FuseAlertType; message: string } = {
-        type   : 'success',
-        message: ''
-    };
-    showAlert: boolean = false;
+    article;
+    url = environment.apiUrl;
+    UPC = '';
 
     /**
      * Constructor
@@ -39,47 +30,57 @@ export class AddComponent implements OnInit,OnDestroy
         private _location: Location,
         private _formBuilder: FormBuilder,
         private _toastr:ToastrServiceCustom,
+        private _articleService:ArticleService,
     )
     {
-        this._unsubscribeAll = new Subject();
     }
     /**
      * On init
      */
     ngOnInit(): void
     {
-        this.userForm = this._formBuilder.group({
-            matricule  : ['',[Validators.required,Validators.pattern(/^(([0-9]{6}\-[0-9]{2}\-[0-9]{2}\-[0-9]{2})|([0-9]*\/FAR))$/)]],
-        });
 
     }
 
-
-    save(){
-        // Do nothing if the form is invalid
-        if ( this.userForm.invalid )
-        {
-            return;
+    @HostListener('document:keydown', ['$event'])
+    onMessage(event) {
+        if (event.code.startsWith('Digit')){
+            this.UPC += event.key;
         }
-        console.log('form',this.userForm.value)
-
-        // Disable the form
-        this.userForm.disable();
-
+        if (event.code === 'Enter'){
+            this.getArticle(this.UPC);
+        }
 
     }
 
-    /**
-     * On destroy
-     */
-    ngOnDestroy(): void
-    {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next(true);
-        this._unsubscribeAll.complete();
+    getArticle(code){
+        this.UPC = '';
+        console.log('article code',code)
+        if (code && code > 0)
+        this._articleService.getArticleByCode(code).subscribe({
+            next:(data)=>{
+                console.log(data)
+                this.article = data;
+            },
+            error:(error)=>{
+                this._toastr.error('Article non trouvé.');
+                this.article = undefined;
+            }
+        })
     }
 
-    back() {
-        this._location.back();
+    saveQuantite(qte) {
+        if (this.article)
+            this._articleService.addArticleQuantite(this.article.id,qte).subscribe({
+                next:(data)=>{
+                    console.log(data)
+                    this.article = data;
+                    this._toastr.success('Stock modifé');
+                },
+                error:(error)=>{
+                    console.log(error)
+                    this._toastr.error(error?.error?.description);
+                }
+            });
     }
 }
