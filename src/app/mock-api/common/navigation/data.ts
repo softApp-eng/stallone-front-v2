@@ -27,16 +27,24 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 id   : 'add',
                 title: 'Ajouter',
                 type : 'basic',
-                icon : 'home',
+                icon : 'menu',
                 roles : ['ADMIN','EDIT','VIEW'],
                 link : '/article/add'
             },{
                 id   : 'stock',
                 title: 'Stock',
                 type : 'basic',
-                icon : 'home',
+                icon : 'archive',
                 roles : ['ADMIN','EDIT','VIEW'],
                 link : '/article/stock'
+            },
+            {
+                id   : 'statistique',
+                title: 'statistique',
+                type : 'basic',
+                icon : 'add_chart',
+                roles : ['ADMIN','EDIT','VIEW'],
+                link : '/article/statistique'
             }
         ]
     },{

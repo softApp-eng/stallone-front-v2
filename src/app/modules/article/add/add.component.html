@@ -1,13 +1,15 @@
 <div class="flex flex-col flex-auto min-w-0">
 
     <!-- Header -->
-    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between  sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
         <div class="flex-1 min-w-0">
             <!-- Breadcrumbs -->
             <div class="flex flex-wrap items-center font-medium">
                 <div>
                     <a class="whitespace-nowrap text-primary-500">Stallone stock</a>
                 </div>
+               
+
             </div>
             <!-- Title -->
             <div class="mt-2">
@@ -19,6 +21,7 @@
     </div>
 
     <div class="flex flex-auto p-6 sm:p-10">
+        
         <div class="flex flex-col flex-auto w-full max-w-xs sm:max-w-5xl mx-auto">
             <div class="flex flex-col sm:flex-row items-center justify-between w-full max-w-xs sm:max-w-none">
                 <mat-form-field
@@ -39,9 +42,22 @@
                     class="mt-8 sm:mt-0 sm:ml-auto"
                     [color]="'primary'"
                     (change)="inpcode.value='';inpcode.disabled = !inpcode.disabled">
-                    manuel1
+                    manuel
                 </mat-slide-toggle>
+               
+                <button
+                class="px-4 mr-1"
+                mat-button
+                (click)="showMoal()"
+                [color]="'primary'">
+                
+                <mat-icon
+                    class="icon-size-5"
+                    svgIcon="add_shopping_cart"></mat-icon>
+                <span class="ml-2">Ajouter</span>
+            </button>
             </div>
+          
         </div>
     </div>
 
@@ -55,9 +71,9 @@
                         alt="Card cover image">
                 </div>
                 <div class="flex flex-col flex-auto m-8 mb-4">
-                    <div class="text-2xl leading-tight">{{article?.designation}}</div>
-                    <div class="text-md font-medium text-secondary mt-1">{{article?.code}}</div>
-                    <div class="text-3xl font-semibold mt-4">{{article?.prix+' DH'}}</div>
+                    <div class="text-2xl leading-tight">Designation : {{article?.designation}}</div>
+                    <div class="text-md font-medium text-secondary mt-1">Ref : {{article?.code}}</div>
+                    <div class="text-3xl font-semibold mt-4">Prix : {{article?.prix+' DH'}}</div>
                     <div class="flex items-center text-md mt-6">
                         <span class="text-secondary whitespace-nowrap mr-3">Quantité stock:</span>
                         <span class="font-bold text-primary mr-2">{{article?.quantite}}</span>
@@ -81,6 +97,7 @@
                         </button>
                     </div>
                 </div>
+                
             </fuse-card>
         </div>
 

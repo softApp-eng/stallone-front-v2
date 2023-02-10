@@ -61,7 +61,8 @@
                             "src/styles/styles.scss",
                             "src/styles/tailwind.scss",
                             "node_modules/@fullcalendar/common/main.css",
-                            "node_modules/@fullcalendar/daygrid/main.css"
+                            "node_modules/@fullcalendar/daygrid/main.css",
+                            "node_modules/ngx-simple-modal/styles/simple-modal.css"
                         ],
                         "scripts": []
                     },

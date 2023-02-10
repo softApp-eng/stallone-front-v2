@@ -15,9 +15,14 @@ import { appRoutes } from 'app/app.routing';
 import {ToastrModule} from "ngx-toastr";
 import {MatPaginatorIntl} from "@angular/material/paginator";
 import {CustomMatPaginatorIntl} from "./core/services/CustomMatPaginator";
-import {MAT_DATE_LOCALE} from "@angular/material/core";
+import {MatRippleModule, MAT_DATE_LOCALE} from "@angular/material/core";
 import { FuseScrollbarModule } from '@fuse/directives/scrollbar';
+import {MatDialogModule } from '@angular/material/dialog';
 
+import { SimpleModalComponentComponent } from './modules/simple-modal-component/simple-modal-component.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
     scrollPositionRestoration: 'enabled'
@@ -25,10 +30,12 @@ const routerConfig: ExtraOptions = {
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        SimpleModalComponentComponent
     ],
     imports: [
         BrowserModule,
+        MatDialogModule,
         BrowserAnimationsModule,
         RouterModule.forRoot(appRoutes, routerConfig),
 
@@ -47,10 +54,18 @@ const routerConfig: ExtraOptions = {
         // 3rd party modules that require global configuration via forRoot
         MarkdownModule.forRoot({}),
         FuseScrollbarModule,
+        MatFormFieldModule,
+        
     ],
+    exports: [
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatRippleModule,
+      ],
     bootstrap   : [
         AppComponent
-    ],
+    ],entryComponents:[MatDialogModule],
     providers: [{
         provide: MatPaginatorIntl,
         useClass: CustomMatPaginatorIntl

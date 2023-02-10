@@ -1,0 +1,64 @@
+<h2 mat-dialog-title>Install Angular</h2>
+<mat-dialog-content class="mat-typography">
+
+  <ng-container *ngIf="article;">
+    <div class="flex flex-col sm:flex-row items-center justify-center w-full max-w-xs sm:max-w-none">
+        <fuse-card class="flex flex-col md:flex-row max-w-80 md:max-w-160 w-full filter-shopping">
+            <div class="flex-0 w-80 md:w-60 ">
+                <img
+                    class="w-full h-full object-cover"
+                    [src]="url+'/public/article/image?name='+article?.code+'.jpg'"
+                    alt="Card cover image">
+            </div>
+            <div class="flex flex-col flex-auto m-8 mb-4">
+                <div class="text-2xl leading-tight">{{article?.designation}}</div>
+                <div class="text-md font-medium text-secondary mt-1">{{article?.code}}</div>
+                <div class="text-3xl font-semibold mt-4">{{article?.prix+' DH'}}</div>
+                <div class="flex items-center text-md mt-6">
+                    <span class="text-secondary whitespace-nowrap mr-3">Quantité stock:</span>
+                    <span class="font-bold text-primary mr-2">{{article?.quantite}}</span>
+                </div>
+                <hr class="w-full border-b mt-6 md:mt-auto mb-4">
+                <div class="flex flex-col sm:flex-row items-center justify-between -mx-3">
+                    <mat-form-field class="example-full-width" appearance="legacy">
+                        <mat-label>Quantité</mat-label>
+                        <input #inpQuantite type="number" min="1" matInput placeholder="Quantité">
+                    </mat-form-field>
+                    <button
+                        class="px-3 mr-1"
+                        mat-button
+                        [disabled]="inpQuantite.value.length == 0"
+                        (click)="saveQuantite(inpQuantite.value)"
+                        [color]="'primary'">
+                        <mat-icon
+                            class="icon-size-5"
+                            svgIcon="add_shopping_cart"></mat-icon>
+                        <span class="ml-2">Ajouter</span>
+                    </button>
+                </div>
+            </div>
+            
+        </fuse-card>
+    </div>
+  
+  </ng-container>
+  
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+</mat-dialog-actions>
+<mat-form-field
+class="fuse-mat-no-subscript w-full sm:w-100 mt-4 sm:mt-0 sm:ml-4"
+[floatLabel]="'always'">
+<mat-icon
+    matPrefix
+    class="icon-size-5"></mat-icon>
+<input
+    #inpcode
+    placeholder="Search by title or description"
+    matInput
+    (keyup.enter)="getArticle(inpcode.value)"
+    #query>
+</mat-form-field>

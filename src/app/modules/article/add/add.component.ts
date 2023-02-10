@@ -10,7 +10,9 @@ import {ToastrServiceCustom} from "../../../core/services/toastr.service";
 import {MatSlideToggleChange} from "@angular/material/slide-toggle";
 import {ArticleService} from "../article.service";
 import {environment} from "../../../../environments/environment";
-
+import { SimpleModalService } from 'ngx-simple-modal';
+import { SimpleModalComponentComponent } from 'app/modules/simple-modal-component/simple-modal-component.component';
+import {MatDialog} from '@angular/material/dialog';
 @Component({
     selector       : 'article-add',
     templateUrl    : './add.component.html',
@@ -30,7 +32,7 @@ export class AddComponent implements OnInit
         private _location: Location,
         private _formBuilder: FormBuilder,
         private _toastr:ToastrServiceCustom,
-        private _articleService:ArticleService,
+        private _articleService:ArticleService,public dialog: MatDialog
     )
     {
     }
@@ -49,6 +51,7 @@ export class AddComponent implements OnInit
         }
         if (event.code === 'Enter'){
             this.getArticle(this.UPC);
+           // this.openDialog(this.UPC);
         }
 
     }
@@ -83,4 +86,17 @@ export class AddComponent implements OnInit
                 }
             });
     }
+    showMoal(){
+        
+           
+              
+    }
+    openDialog(code) {
+        this.getArticle(code);
+    const dialogRef = this.dialog.open(SimpleModalComponentComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 }
